@@ -1,0 +1,29 @@
+#read data
+file_in = open('平成26年佐々木信　.txt')
+f_line = file_in.read()
+mecab_tagger = MeCab.Tagger("-Owakati")##定义怎么分
+
+#stopwords
+stopwords_file=open('stop_words_japanese.txt')
+stopwords=list()
+for line in stopwords_file.readlines():
+    line=line.strip()
+    stopwords.append(line)
+stopwords_file.close()
+exclude={'、','まし','する','さ','へ','れ','こと','て','。','者','た','つい','ます','や','・','.','％','な',
+         'いる','など','おり','あり','よる','また','あっ','おい','等'} ##除去停用词
+print (len(stopwords),len(exclude))
+
+# count 数词
+object_list=[]
+# 分词追加到列表
+for word in result:         # 循环读出每个分词
+    if word not in stopwords:       # 如果不在去除词库中
+        if word not in exclude:
+            object_list.append(word)    # 分词追加到列表
+        
+# 词频统计
+word_counts = collections.Counter(object_list)       # 对分词做词频统计
+word_counts_top = word_counts.most_common(10) ##输出前1000个频率最高的词语
+
+word_counts_top
